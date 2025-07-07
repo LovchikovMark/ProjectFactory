@@ -1,0 +1,13 @@
+{
+    "ruby": [
+        "thor"
+    ],
+    "nodejs": [
+        "@types/js-yaml",
+        "@types/node",
+        "commander",
+        "js-yaml",
+        "typescript"
+    ],
+    "git": []
+}

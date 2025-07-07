@@ -10,18 +10,27 @@ Imagine you have three same projects, with equal stucture. ProjectFactory helps 
 
 Firstly you have to load the installation script. For it:
 
-git clone https://LovchikovMark/ProjectFactory/scripts/install.sh
+```
+curl -O https://raw.githubusercontent.com/LovchikovMark/ProjectFactory/master/scripts/install.sh
+```
+
 After it:
 
+```
 chmod +x install.sh
+```
+
 Than:
 
+```
 sudo bash install.sh
+```
+
 ### About install.sh
 
 This script will install nodejs, ruby and some packages need for ProjectFactory, so it needs "sudo".  If you already have that packages, nothing will be installed.
 
-> all requirements are described on requirements.txt
+> all requirements are described on requirements.json
 
 Also, this script will move all ProjectFactories' files on /usr/share, and will add the alias in your ~/.bashrc
 
@@ -41,13 +50,17 @@ Default, PF provide templates for projects on: python, js, ts, ruby, c#, c, c++.
 
 So for use a custom template, write:
 
+```
 pf --template <path_to_your_template>
+```
+
 ### How to write your own template?
 
 PF works with .yaml ( .yml ) files, for describe your file structure. 
 
 Example:
 
+```
 src:
   folder1: 
     - file1
@@ -62,12 +75,13 @@ core:
     - file2
   folder3: 
     - file3
+```
 
 As you can see, that's easy😁
 
 If you're wanna create files and subfolders, you must write like:
 
-
+```
 src:
   root:
     - file_on_root1
@@ -89,6 +103,7 @@ core:
     - file2
   folder3: 
     - file3
+```
 
 ### Directory
 
@@ -96,7 +111,10 @@ PF also has a "-d (--directory)" flag. As you understood right, it needs to look
 
 Use like:
 
+```
 pf --template <path_to_your_template> -d .
+```
+
 This command will create necessary structure on current directory, use it carefully🙂
 
 ## Conclusion
