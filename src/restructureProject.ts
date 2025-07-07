@@ -1,0 +1,1 @@
+console.log('This script should be restructure you project accord the new template...')

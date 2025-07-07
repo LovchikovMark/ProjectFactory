@@ -1,0 +1,21 @@
+{
+  "name": "ProjectFactoryCli",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "compile": "tsc --outDir dist/",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@types/commander": "^2.12.0",
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^24.0.10",
+    "commander": "^14.0.0",
+    "js-yaml": "^4.1.0",
+    "typescript": "^5.8.3"
+  }
+}

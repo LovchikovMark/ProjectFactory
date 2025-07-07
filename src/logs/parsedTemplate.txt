@@ -1,0 +1,1 @@
+{"root":["README.md","LICENSE.md",".gitignore"],"core":{"database":["init.py"],"entities":["person.py"],"utils":["convertToPersents.py"]},"src":["main.py"],"test":["test.py"],"scripts":["add-to-path.sh"],"api":["api.py"]}
