@@ -7,7 +7,7 @@ class Cli < Thor
   option :directory, type: :string, aliases: "-d", desc: "Path to your directory"
   option :git, type: :string, aliases: "-g", desc: "Link to your remote github repo"
   def create
-    output = `node ~/MyProjects/ProjectFactory/src/compiled/executeTemplate.js --template #{options[:template]} --directory #{options[:directory]}`
+    output = `node ~/MyProjects/ProjectFactory/dist/executeTemplate.js --template #{options[:template]} --directory #{options[:directory]}`
     puts output
   end
 end
