@@ -4,14 +4,13 @@ import * as path from "path"
 
 async function main()
 {
-    console.log(process.argv)
     try
     {
         const templatePath = process.argv[3];
         const absolutePath = path.isAbsolute(templatePath) ? templatePath : path.resolve(process.cwd(), templatePath);
         const directoryPath = process.argv[5] ? process.argv[5] : process.cwd()
         const content = yaml.load(fs.readFileSync(absolutePath, 'utf-8'));
-        
+
         fs.writeFileSync(path.join(process.env.HOME as string, '/MyProjects/ProjectFactory/src/logs/parsedTemplate.txt'), JSON.stringify(content));
         executeTemplate(content, directoryPath);
     }

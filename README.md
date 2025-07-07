@@ -28,7 +28,7 @@ sudo bash install.sh
 
 ### About install.sh
 
-This script will install nodejs, ruby and some packages need for ProjectFactory, so it needs "sudo".  If you already have that packages, nothing will be installed.
+This script will install light versions of nodejs and ruby ( if aren't installed ) and some libs need for ProjectFactory, so it needs "sudo". If you already have that packages, nothing will be installed :)
 
 > all requirements are described on requirements.json
 
@@ -39,7 +39,10 @@ Also, this script will move all ProjectFactories' files on /usr/share, and will 
 
 Well done! You successfully installed the ProjectFacfory! If you will want to uninstall pf, so just write:
 
-pf uninstall
+```
+pf delete
+```
+
 And after removing, please, left the report on my repo🥹
 
 ### Templates
