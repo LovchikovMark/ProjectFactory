@@ -1,58 +1,29 @@
-import * as fs from 'fs'
+import * as fs from 'fs/promises'
 import * as yaml from 'js-yaml'
 import * as path from "path"
-import { types } from 'util';
+import { getCurrentTemplate } from './getCurrentTemplate';
 
 async function main()
 {
     try
     {
-        const templatePath = process.argv[3];
-        const absolutePath = path.isAbsolute(templatePath) ? templatePath : path.resolve(process.cwd(), templatePath);
+        const newTemplatePath = process.argv[3];
+        const absolutePath = path.isAbsolute(newTemplatePath) ? newTemplatePath : path.resolve(process.cwd(), newTemplatePath);
         const directoryPath = process.argv[5] ? process.argv[5] : process.cwd()
-        const content = yaml.load(fs.readFileSync(absolutePath, 'utf-8'));
+        const newTemplateContent = await yaml.load(await fs.readFile(absolutePath, 'utf-8'));
 
-        fs.writeFileSync(path.join(process.env.HOME as string, '/MyProjects/ProjectFactory/src/logs/parsedTemplate.txt'), JSON.stringify(content));
-        executeTemplate(content, directoryPath);
+        if(compareOldAndNewTemplate(await getCurrentTemplate(process.cwd()), await yaml.load(newTemplateContent as string)))
+        {
+            restructureProject(await getCurrentTemplate(process.cwd()), newTemplateContent)
+        }
+        else
+        {
+            console.log("Templates not coincide! All files from old template should be in new template, please, check it")
+        }
     }
     catch(e)
     {
         throw new Error(`${e}`)
-    }
-}
-
-async function executeTemplate(tree : any, startDir : string)
-{
-    for (const [key, value] of Object.entries(tree)) {
-        if(key == "root")
-        {
-            for(let file in tree[key])
-                await fs.promises.writeFile(startDir + "/" + tree[key][file], "")
-            continue
-        }
-        const fullPath = path.join(startDir, key);
-
-        await fs.promises.mkdir(fullPath, { recursive: true });
-
-        if (typeof value === 'object') 
-        {
-            if (Array.isArray(value)) {
-                for (const fileName of value) {
-                    const filePath = path.join(fullPath, fileName);
-                    await fs.promises.writeFile(filePath, '');
-                }
-            } else {
-                await executeTemplate(value, fullPath);
-            }
-        }
-        else if (typeof value === 'string')
-        {
-
-        }
-        else
-        {
-          console.error("Unexpected value type:", typeof value, value);
-        }
     }
 }
 
@@ -72,6 +43,25 @@ function getAllFiles(tree : any) : any[]
             leaves.push(value)
     }
     return leaves.flat()
+}
+
+function restructureProject(oldTemplate : any, newTemplate : any, currentDir = process.cwd())
+{
+    console.log(oldTemplate)
+    const oldPaths : Record<string, string> = {}
+    for(const [key, value] of Object.entries(oldTemplate))
+    {
+        const fullPath = path.join(currentDir, key);
+        if(value == 'root' && typeof(value) == 'object')
+        {
+            for(let item in value)
+            {
+                oldPaths[item] == fullPath + `/${item}`
+            }
+        }
+        else if(value != 'root' && typeof(value) == 'object')
+            restructureProject(value, "", fullPath)
+    }
 }
 
 main()

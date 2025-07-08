@@ -1,5 +1,7 @@
-#######################
-apt install git
+#!/bin/bash
+
+# Установка git
+sudo apt install git -y
 
 echo "Looking for NodeJS..."
 if ! command -v node &> /dev/null; then
@@ -10,7 +12,8 @@ if ! command -v node &> /dev/null; then
     nvm install --lts
     echo "Well done) Now you have a NodeJS)"
 else
-    echo "NodeJS already exist, that's good. What about ruby..."
+    echo "NodeJS already exists, that's good. What about Ruby..."
+fi
 
 echo "Looking for Ruby..."
 if ! command -v ruby &> /dev/null; then
@@ -22,24 +25,21 @@ if ! command -v ruby &> /dev/null; then
     rbenv global 3.1.0
     echo "Well done) Now you have a Ruby)"
 else
-    echo "Ruby already exist, fine! How about git?"
+    echo "Ruby already exists, fine! How about git?"
 fi
 
+# Установка thor
 gem install thor
 
-#######################
-
+# Клонирование репозитория и выполнение скриптов
 git clone https://github.com/LovchikovMark/ProjectFactory.git /usr/local/src/ProjectFactory
-cd /usr/local/src/ProjectFactory/scripts
-chmod +x add-to-bashrc.sh
-chmod +x delete.sh
-chmod +x remove-from-bashrc.sh
+cd /usr/local/src/ProjectFactory/scripts || exit
+chmod +x add-to-bashrc.sh delete.sh remove-from-bashrc.sh
 bash add-to-bashrc.sh
-cd ../
+cd ../ || exit
 npm run compile
 
-#######################
+echo "alias pf='ruby /usr/local/src/ProjectFactory/cli/cli.rb'" >> ~/.bashrc
+source ~/.bashrc
 
 echo "nice using!)"
-
-#######################

@@ -1,1 +1,0 @@
-sed -i.bak "/^alias pf='ruby \/usr\/local\/src\/ProjectFactory\/cli\/cli.rb'/d" ~/.bashrc
