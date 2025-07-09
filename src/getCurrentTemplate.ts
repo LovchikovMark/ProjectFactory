@@ -1,7 +1,6 @@
 import * as fs from 'fs/promises'
-import * as os from 'os'
 
-export async function getCurrentTemplate(currentDirectory = process.cwd())
+export async function getCurrentTemplate(currentDirectory : string)
 {
     let currentTemplate : Record<string, any> = {root: []}
     let items = await fs.readdir(currentDirectory)
@@ -42,5 +41,3 @@ export async function getCurrentTemplate(currentDirectory = process.cwd())
     }
     return currentTemplate
 }
-
-(async () => console.log(await getCurrentTemplate()))()

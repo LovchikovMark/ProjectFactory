@@ -12,13 +12,13 @@ async function main()
         const directoryPath = process.argv[5] ? process.argv[5] : process.cwd()
         const newTemplateContent = await yaml.load(await fs.readFile(absolutePath, 'utf-8'));
 
-        if(compareOldAndNewTemplate(await getCurrentTemplate(process.cwd()), await yaml.load(newTemplateContent as string)))
+        if(compareOldAndNewTemplate(await getCurrentTemplate(directoryPath), newTemplateContent as Record<string, any>))
         {
-            restructureProject(await getCurrentTemplate(process.cwd()), newTemplateContent)
+            console.log('Project was successfully restructed!')
         }
         else
         {
-            console.log("Templates not coincide! All files from old template should be in new template, please, check it")
+            console.log('It looks like your new template (accrod we tried to restruct you directory) and you current project have different files')
         }
     }
     catch(e)
@@ -29,20 +29,21 @@ async function main()
 
 function compareOldAndNewTemplate(oldTemplate : any, newTemplate : any) : boolean
 {
+
     return getAllFiles(newTemplate).every(item => getAllFiles(oldTemplate).includes(item))
 }
 
-function getAllFiles(tree : any) : any[]
-{
-    let leaves = []
-    for(const [key, value] of Object.entries(tree))
-    {
-        if(typeof(value) == 'object')
-            leaves.push(getAllFiles(value))
-        else if(Array.isArray(value))
-            leaves.push(value)
+function getAllFiles(tree: Record<string, any>): string[] {
+    let leaves: string[] = [];
+
+    for (const node in tree) {
+        if (Array.isArray(tree[node])) {
+            leaves.push(...tree[node].map(item => item));
+        } else if (typeof tree[node] === 'object') {
+            leaves.push(...getAllFiles(tree[node]));
+        }
     }
-    return leaves.flat()
+    return leaves;
 }
 
 function restructureProject(oldTemplate : any, newTemplate : any, currentDir = process.cwd())
