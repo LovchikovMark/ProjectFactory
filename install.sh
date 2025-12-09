@@ -2,24 +2,17 @@
 
 echo "Installing ProjectFactory..."
 
-git clone https://github.com/LovchikovMark/ProjectFactory.git ~/.projectfactory
-
-cd ~/.projectfactory
-
-pip install -r req.txt
-
-chmod +x ~/.projectfactory/main.py
-
-sudo ln -sf ~/.projectfactory/main.py /usr/local/bin/pf
+git clone https://raw.githubusercontent.com/LovchikovMark/ProjectFactory/master/bin/main /usr/local/bin/
 
 if [[ -f ~/.bashrc ]]; then
-    echo "alias pf='python ~/.projectfactory/main.py'" >> ~/.bashrc
+    echo "alias pf=' bash /usr/local/bin/main'" >> ~/.bashrc
 fi
 
 if [[ -f ~/.zshrc ]]; then
-    echo "alias pf='python ~/.projectfactory/main.py'" >> ~/.zshrc
+    echo "alias pf=' bash /usr/local/bin/main'" >> ~/.zshrc
 fi
+
+source ~/.bashrc
 
 echo "✅ Installation complete!"
 echo "Usage: pf [command]"
-echo "Restart your terminal or run: source ~/.bashrc"

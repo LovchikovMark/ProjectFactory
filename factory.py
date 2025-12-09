@@ -9,8 +9,6 @@ def Factory(data, path = os.getcwd()):
         for folder_name in list(filter(lambda i: i != "files", list(data.keys()))):
 
             os.mkdir(path + "/" + folder_name)
-
-            print(data)
                     
             if 'files' in data[folder_name] and data[folder_name]['files']:
 
@@ -32,7 +30,6 @@ def Factory(data, path = os.getcwd()):
 
 
 
-
             if type(data[folder_name]) == str:
 
                 shutil.copytree(path + '/' + data[folder_name], path + "/" + folder_name, dirs_exist_ok=True)
@@ -44,3 +41,4 @@ def Factory(data, path = os.getcwd()):
     except Exception as e:
 
         print(f'Error! {e}')
+        
