@@ -1,14 +1,16 @@
-import typer
-import json
+import yaml
 from factory import Factory
 
 try:
 
-    with open('test.json', 'r') as f:
+    with open('test.yaml', 'r') as f:
 
-        data = json.loads(f.read())
+        data = yaml.safe_load(f)
 
         Factory(data)
+
+        #print(list(filter(lambda i: isinstance(data[i], dict), list(data.keys()))))
+
 
 except FileNotFoundError:
 

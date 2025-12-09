@@ -2,25 +2,45 @@ import shutil
 from pathlib import Path
 import os
 
-def Factory(data, path = "~"):
+def Factory(data, path = os.getcwd()):
 
-    if "folders" in data and data['folders']:
+    try:
 
-        for folder_name in list(data['folders'].keys()):
+        for folder_name in list(filter(lambda i: i != "files", list(data.keys()))):
 
             os.mkdir(path + "/" + folder_name)
+
+            print(data)
                     
-            if 'files' in data['folders'][folder_name] and data["folders"][folder_name]['files']:
+            if 'files' in data[folder_name] and data[folder_name]['files']:
 
-                for file_name in data["folders"][folder_name]['files']:
+                if isinstance(data[folder_name]['files'], list):
 
-                    Path(path + "/" + folder_name + "/" + file_name).touch()
+                    for file_name in data[folder_name]['files']:
+
+                        Path(path + "/" + folder_name + "/" + file_name).touch()
+
+                elif isinstance(data[folder_name]['files'], dict):
+
+                    for file_name in list(data[folder_name]['files'].keys()):
+
+                        Path(path + "/" + folder_name + "/" + file_name).touch()
+
+                        with open(path + "/" + folder_name + "/" + file_name, 'w', encoding='utf-8') as f:
+
+                            f.write(data[folder_name]['files'][file_name])
 
 
-            if type(data['folders'][folder_name]) == str:
 
-                shutil.copytree(path + '/' + data['folders'][folder_name], path + "/" + folder_name, dirs_exist_ok=True)
+
+            if type(data[folder_name]) == str:
+
+                shutil.copytree(path + '/' + data[folder_name], path + "/" + folder_name, dirs_exist_ok=True)
             
             else:
 
-                Factory(data['folders'][folder_name], path + "/" + folder_name)
+                Factory(data[folder_name], path + "/" + folder_name)
+    
+    except Exception as e:
+
+        print(f'Error! {e}')
