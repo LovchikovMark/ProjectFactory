@@ -1,0 +1,34 @@
+on:
+  push:
+    branch:
+      - "*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: build binary file
+        run: |
+
+          pyinstaller --onefile --name pf main.py
+          rm /bin/*
+          mv dist bin
+
+      - name: Commit and push
+        run: |
+
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git diff --quiet && git diff --staged --quiet || git commit -m "Auto-update"
+          git push
+
+      
