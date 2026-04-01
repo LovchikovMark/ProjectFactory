@@ -18,6 +18,7 @@ jobs:
       - name: build binary file
         run: |
 
+          ls bin/
           pip install pyinstaller
           pyinstaller --onefile --name 52 main.py
           rm bin/*
