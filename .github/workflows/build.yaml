@@ -21,7 +21,7 @@ jobs:
           ls bin/
           pip install pyinstaller
           pyinstaller --onefile --name 52 main.py
-          rm bin/*
+          rm -rf bin
           mv dist bin
 
       - name: Commit and push
