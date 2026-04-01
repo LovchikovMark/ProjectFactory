@@ -18,7 +18,8 @@ jobs:
       - name: build binary file
         run: |
 
-          pyinstaller --onefile --name pf main.py
+          pip install pyinstaller
+          pyinstaller --onefile --name 52 main.py
           rm /bin/*
           mv dist bin
 
