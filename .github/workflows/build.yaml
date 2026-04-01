@@ -20,7 +20,7 @@ jobs:
 
           pip install pyinstaller
           pyinstaller --onefile --name 52 main.py
-          rm /bin/*
+          rm bin/*
           mv dist bin
 
       - name: Commit and push
