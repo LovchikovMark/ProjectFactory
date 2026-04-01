@@ -20,7 +20,7 @@ jobs:
 
           ls bin/
           pip install pyinstaller
-          pyinstaller --onefile --name 52 main.py
+          pyinstaller --onefile --name pf main.py
           rm -rf bin
           mv dist bin
 
