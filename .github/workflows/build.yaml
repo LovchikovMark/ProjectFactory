@@ -2,6 +2,10 @@ on:
   push:
     branch:
       - "*"
+    paths:
+      - "main.py"
+      - "req.txt"
+      - ".github/workflows/build.yaml"
 
 jobs:
   build:
@@ -19,6 +23,7 @@ jobs:
         run: |
 
           ls bin/
+          pip install -r req.txt
           pip install pyinstaller
           pyinstaller --onefile --name pf main.py
           rm -rf bin
