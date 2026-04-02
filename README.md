@@ -14,8 +14,6 @@ Try it out and boost your productivity!
 
 ## Installation
 
-### Manual
-
 ```
 curl -L -o /usr/local/bin/pf https://github.com/LovchikovMark/ProjectFactory/releases/latest/download/pf
 
