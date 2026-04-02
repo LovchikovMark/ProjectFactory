@@ -3,6 +3,7 @@ import typer
 from factory import Factory
 import os
 from pathlib import Path
+import shutil
 
 app = typer.Typer()
 
@@ -53,7 +54,7 @@ def smt(sample_file_path : str = typer.Option(False, '-f', help="Sample file pat
 
     try:
 
-        Path.copy_into(json_path, f"{Path.home()}/.config/pf")
+        shutil.copy2(json_path, f"{Path.home()}/.config/pf")
 
     except FileNotFoundError:
 
