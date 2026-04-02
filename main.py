@@ -8,9 +8,6 @@ app = typer.Typer()
 
 @app.command(help="Create file stucture")
 def cfs(sample_file_path : str = typer.Option(None, '-f', help="Sample file path"), my_template_name : str = typer.Option(None, '-t', help="Sample file path"),directory : str = typer.Argument(default=os.getcwd, help="target directory")):
-    
-    print(sample_file_path)
-    print(my_template_name)
 
     if sample_file_path:
 
