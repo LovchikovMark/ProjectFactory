@@ -5,3 +5,4 @@ dist/
 test.yaml
 *.spec
 test/
+bin/

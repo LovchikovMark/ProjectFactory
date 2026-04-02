@@ -1,7 +1,7 @@
 on:
   push:
-    branch:
-      - "*"
+    tags:
+      - "v*"
     paths:
       - "main.py"
       - "req.txt"
@@ -22,20 +22,16 @@ jobs:
       - name: build binary file
         run: |
 
-          ls bin/
           pip install -r req.txt
           pip install pyinstaller
           pyinstaller --onefile --name pf main.py
-          rm -rf bin
-          mv dist bin
+          mkdir -p release
+          mv dist/pf release
 
-      - name: Commit and push
-        run: |
-
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add .
-          git diff --quiet && git diff --staged --quiet || git commit -m "Auto-update"
-          git push
-
-      
+      - name: Create Release and Upload Asset
+        uses: softprops/action-gh-release@v1
+        with:
+          files: release/pf
+          generate_release_notes: true
+          name: Release ${{ github.ref_name }}
+          tag_name: ${{ github.ref_name }}
