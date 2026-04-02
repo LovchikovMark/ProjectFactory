@@ -1,3 +1,7 @@
+[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/LovchikovMark/ProjectFactory/releases)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![Python](https://img.shields.io/badge/python-3.12+-blue.svg)](https://www.python.org/)
+
 # Welcome to ProjectFactory!
 
 Tired of manually creating the same project structure over and over? ProjectFactory solves that! With templates for NestJS, NextJS, ASP.NET, and other popular frameworks, you can generate complete project setups in seconds.
@@ -8,52 +12,78 @@ Try it out and boost your productivity!
 
 -----------------
 
+## Installation
 
-Tutorial:
+### Manual
 
-For start using PF, create a .json file. It's structure:
+```
+curl -L -o /usr/local/bin/pf https://github.com/LovchikovMark/ProjectFactory/releases/latest/download/pf
+
+sudo chmod +x /usr/local/bin/pf
+
+mkdir ~/.config/pf
+```
+
+## Tutorial:
+
+To start using PF, create a .json config file. Its structure:
 
 ```
 {
-    "folders": {
-
-        "Controllers": {
-
-            "files": ['main.controller.js']
-
-        },
-
-        "Models": {
-            "files": ['main.module.js']
-        },
-
-        "Views": {
-            "files": ['main.view.js']
-        }
-    }
+    "src": {
+        "database": {},
+        "files": ["main.py"]
+    },
+    "test": {
+        "files": ["test.py"]
+    },
+    "files": [".gitignore", "README.md", "req.txt", "AUTHORS.md", ".env"]
 }
 ```
 
-
-"folders" block containes only folders, "files" contains only files.
-
-If you're wanna copy all from one folder to another, just write like this:
+Then, you can create a file structure by 'cfs' command:
 
 ```
-{
-    "folders": {
-        
-        "f1": {
-            
-            "files": ["file.txt"]
-
-        },
-
-        "f2": "f1"
-
-    }
-}
-
+pf cfs -f <path_to_your_config_file> <target_directory>
 ```
 
-So all from f1 will be copy to f2
+- Example:
+    ```
+    pf cfs -f python-project.json home
+    ```
+
+If you want safe your config, use the 'smt' command:
+
+```
+pf smt -f <path_to_your_config_file>
+```
+
+- Example:
+    ```
+    pf smt -f python-project.json
+    ```
+
+Now, you can use it to create file structure everywhere:
+
+```
+pf cfs -t <your_config_file_name>
+```
+
+- Example:
+    ```
+    pf cfs -t python-project
+    ```
+
+If you want to see all your templates:
+
+```
+pf gmt
+```
+
+Or manually:
+
+```
+ls ~/.config/pf
+```
+
+Enjoy! :)
